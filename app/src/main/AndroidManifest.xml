@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".startActivity"
+            android:label="@string/title_activity_start" >
+        </activity>
+        <activity
+            android:name=".joinActivity"
+            android:label="@string/title_activity_join" >
+        </activity>
     </application>
 
 </manifest>
