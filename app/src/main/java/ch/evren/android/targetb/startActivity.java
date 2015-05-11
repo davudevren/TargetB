@@ -1,13 +1,18 @@
 package ch.evren.android.targetb;
 
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
+import java.io.IOException;
 
 
 public class startActivity extends ActionBarActivity {
-
+    GameServer gameServer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,5 +40,22 @@ public class startActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void startServer(View view) throws IOException {
+        Context context = getApplicationContext();
+        CharSequence text = "Hello toast!";
+        int duration = Toast.LENGTH_SHORT;
+
+        gameServer = new GameServer(context);
+        gameServer.start();
+
+
+
+        Toast.makeText(context, text, duration).show();
+    }
+
+    public void startRound(View view) {
+        gameServer.startNewRound();
     }
 }
