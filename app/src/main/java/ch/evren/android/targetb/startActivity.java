@@ -6,17 +6,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
 
 
 public class startActivity extends ActionBarActivity {
+    TextView welcomeText;
+
     GameServer gameServer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+        welcomeText = (TextView) findViewById(R.id.startWelcome);
     }
 
 
@@ -44,15 +49,15 @@ public class startActivity extends ActionBarActivity {
 
     public void startServer(View view) throws IOException {
         Context context = getApplicationContext();
-        CharSequence text = "Hello toast!";
+        CharSequence text = "Server started";
         int duration = Toast.LENGTH_SHORT;
 
         gameServer = new GameServer(context);
         gameServer.start();
 
-
-
         Toast.makeText(context, text, duration).show();
+        welcomeText.setText(Utils.getIPAddress(true));
+
     }
 
     public void startRound(View view) {

@@ -63,9 +63,10 @@ public class GameServer extends Thread{
 
         clients.add(new Client(name, clientSocket));
 
-        Looper.prepare();
-        Toast.makeText(context, name + " has connected.", Toast.LENGTH_SHORT).show();
-        Looper.loop();
+        //Looper.prepare();
+        //Toast.makeText(context, name + " has connected.", Toast.LENGTH_SHORT).show();
+        //Looper.loop();
+        int i = 0;
     }
 
     public void startNewRound() {
