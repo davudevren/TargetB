@@ -52,7 +52,7 @@ public class startActivity extends ActionBarActivity {
         CharSequence text = "Server started";
         int duration = Toast.LENGTH_SHORT;
 
-        gameServer = new GameServer(context);
+        gameServer = new GameServer(welcomeText);
         gameServer.start();
 
         Toast.makeText(context, text, duration).show();

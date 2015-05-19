@@ -2,6 +2,7 @@ package ch.evren.android.targetb;
 
 import android.content.Context;
 import android.os.Looper;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,10 +21,10 @@ public class GameServer extends Thread{
 
     ServerSocket server;
     List<Client> clients;
-    Context context;
+    TextView welcomeText;
 
-    public GameServer(Context context) throws IOException {
-        this.context = context;
+    public GameServer(TextView welcomeText) throws IOException {
+        this.welcomeText = welcomeText;
     }
 
     @Override
@@ -61,23 +63,18 @@ public class GameServer extends Thread{
 
         clients.add(new Client(name, clientSocket));
 
-        //Looper.prepare();
-        //Toast.makeText(context, name + " has connected.", Toast.LENGTH_SHORT).show();
-        //Looper.loop();
         System.out.println("connect: "+ name);
         int i = 0;
     }
 
-    public void startNewRound() {
-        Looper.prepare();
-        String message = "You Target is " + clients.get(0).getName();
-        try {
-            PrintWriter out = new PrintWriter(clients.get(0).getSocket().getOutputStream(), true);
-            out.println(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Looper.loop();
 
+    public void startNewRound() {
+        Collections.shuffle(clients);
+        String allnames = "";
+        for(int i = 0; i < clients.size(); i++)
+        {
+            allnames+=  clients.get(i).getName() + ",\n";
+        }
+        welcomeText.setText(allnames);
     }
 }
