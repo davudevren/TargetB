@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -18,9 +19,12 @@ import java.util.Scanner;
 public class joinActivity extends ActionBarActivity {
     EditText nameEdit;
     EditText serverEdit;
+    TextView welcomeText;
     Socket socket;
     Scanner in;
     PrintWriter out;
+    GameUpdater gameUpdater;
+    Joiner joiner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,7 @@ public class joinActivity extends ActionBarActivity {
 
         nameEdit = (EditText) findViewById(R.id.Username);
         serverEdit = (EditText) findViewById(R.id.ServerAdress);
+        welcomeText = (TextView) findViewById(R.id.joinWelcome);
     }
 
 
@@ -55,21 +60,8 @@ public class joinActivity extends ActionBarActivity {
     }
 
     public void joinServer(View view) {
-            int i = 0;
-            Joiner joiner = new Joiner(nameEdit.getText().toString(), serverEdit.getText().toString());
-            joiner.execute();
-    }
-
-    private class GameUpdater extends AsyncTask<Boolean, Void, String> {
-        @Override
-        protected String doInBackground(Boolean... bools) {
-            String message = in.nextLine();
-            return message;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT);
-        }
+        gameUpdater = new GameUpdater(this);
+        joiner = new Joiner(this);
+        joiner.execute();
     }
 }

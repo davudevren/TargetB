@@ -21,10 +21,11 @@ public class GameServer extends Thread{
 
     ServerSocket server;
     List<Client> clients;
-    TextView welcomeText;
+    startActivity starterActivity;
+    String name;
 
-    public GameServer(TextView welcomeText) throws IOException {
-        this.welcomeText = welcomeText;
+    public GameServer(startActivity starterActivity) throws IOException {
+        this.starterActivity = starterActivity;
     }
 
     @Override
@@ -59,22 +60,38 @@ public class GameServer extends Thread{
         Scanner in  = new Scanner( clientSocket.getInputStream() );
         PrintWriter out = new PrintWriter( clientSocket.getOutputStream(), true );
 
-        String name = in.nextLine();
+        name = in.nextLine();
 
         clients.add(new Client(name, clientSocket));
 
-        System.out.println("connect: "+ name);
-        int i = 0;
+        starterActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                starterActivity.welcomeText.setText(starterActivity.welcomeText.getText().toString() + name + "\n");
+            }
+        });
+
     }
 
 
     public void startNewRound() {
+        //List<Client> zuweisungsList = new ArrayList<Client>(clients);
         Collections.shuffle(clients);
-        String allnames = "";
-        for(int i = 0; i < clients.size(); i++)
-        {
-            allnames+=  clients.get(i).getName() + ",\n";
+
+        Scanner in;
+        PrintWriter out;
+
+        try {
+            out = new PrintWriter( clients.get(0).getSocket().getOutputStream(), true );
+            out.println(clients.get(clients.size()).getName());
+            for(int i = 1; i < clients.size(); i++){
+
+                    out = new PrintWriter( clients.get(i).getSocket().getOutputStream(), true );
+                    out.println(clients.get(i-1).getName());
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        welcomeText.setText(allnames);
     }
 }

@@ -16,10 +16,11 @@ public class Joiner extends AsyncTask<Void, Void, Socket> {
     Socket socket;
     String serverAdress;
     String name;
+    joinActivity joinerActivity;
 
-    public Joiner(String name, String serverAdress) {
-        this.name = name;
-        this.serverAdress = serverAdress;
+    public Joiner(joinActivity joinerActivity) {
+        this.name = joinerActivity.nameEdit.getText().toString();
+        this.serverAdress = joinerActivity.serverEdit.getText().toString();
     }
 
     @Override
@@ -48,5 +49,9 @@ public class Joiner extends AsyncTask<Void, Void, Socket> {
             e.printStackTrace();
         }
         out.println(name);
+        joinerActivity.socket = socket;
+        joinerActivity.in = in;
+        joinerActivity.out = out;
+        joinerActivity.gameUpdater.execute();
     }
 }
