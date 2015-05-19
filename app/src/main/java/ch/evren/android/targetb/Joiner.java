@@ -19,6 +19,7 @@ public class Joiner extends AsyncTask<Void, Void, Socket> {
     joinActivity joinerActivity;
 
     public Joiner(joinActivity joinerActivity) {
+        this.joinerActivity = joinerActivity;
         this.name = joinerActivity.nameEdit.getText().toString();
         this.serverAdress = joinerActivity.serverEdit.getText().toString();
     }
@@ -49,6 +50,7 @@ public class Joiner extends AsyncTask<Void, Void, Socket> {
             e.printStackTrace();
         }
         out.println(name);
+
         joinerActivity.socket = socket;
         joinerActivity.in = in;
         joinerActivity.out = out;

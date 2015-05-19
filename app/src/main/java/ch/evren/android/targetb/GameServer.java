@@ -83,7 +83,7 @@ public class GameServer extends Thread{
 
         try {
             out = new PrintWriter( clients.get(0).getSocket().getOutputStream(), true );
-            out.println(clients.get(clients.size()).getName());
+            out.println(clients.get(clients.size()-1).getName());
             for(int i = 1; i < clients.size(); i++){
 
                     out = new PrintWriter( clients.get(i).getSocket().getOutputStream(), true );

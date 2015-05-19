@@ -17,6 +17,7 @@ public class GameUpdater  extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         while(!this.isCancelled()){
+            int i = 0;
             final String nextTarget = joinerActivity.in.nextLine();
             joinerActivity.runOnUiThread(new Runnable() {
                 @Override
