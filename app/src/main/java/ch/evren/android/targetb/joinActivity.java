@@ -56,39 +56,8 @@ public class joinActivity extends ActionBarActivity {
 
     public void joinServer(View view) {
             int i = 0;
-            Joiner joiner = new Joiner();
-            joiner.execute(new String[] {serverEdit.getText().toString()});
-    }
-
-    private class Joiner extends AsyncTask<String, Void, Socket> {
-        @Override
-        protected Socket doInBackground(String... urls) {
-            Socket asyncSocket = new Socket();
-            String asyncAdress = urls[0];
-
-            try {
-                asyncSocket = new Socket(asyncAdress,9001);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-            return asyncSocket;
-        }
-
-        @Override
-        protected void onPostExecute(Socket result) {
-            socket = result;
-
-            try {
-                in  = new Scanner( socket.getInputStream() );
-                out = new PrintWriter( socket.getOutputStream(), true );
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            out.println(nameEdit.getText().toString());
-            new GameUpdater().execute(true);
-        }
+            Joiner joiner = new Joiner(nameEdit.getText().toString(), serverEdit.getText().toString());
+            joiner.execute();
     }
 
     private class GameUpdater extends AsyncTask<Boolean, Void, String> {

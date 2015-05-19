@@ -49,8 +49,6 @@ public class GameServer extends Thread{
                 e.printStackTrace();
             }
             finally {
-                if ( client != null )
-                    try { client.close(); } catch ( IOException e ) { }
             }
         }
     }
@@ -66,6 +64,7 @@ public class GameServer extends Thread{
         //Looper.prepare();
         //Toast.makeText(context, name + " has connected.", Toast.LENGTH_SHORT).show();
         //Looper.loop();
+        System.out.println("connect: "+ name);
         int i = 0;
     }
 
