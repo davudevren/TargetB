@@ -37,6 +37,10 @@ public class GameServer extends Thread{
         }
         clients = new ArrayList<Client>();
 
+        //Sich selber initialisieren:
+        Client starter = new Client(starterActivity.nameEdit.getText().toString(), null);
+        clients.add(starter);
+
 
 
         while ( true )
@@ -82,12 +86,19 @@ public class GameServer extends Thread{
         PrintWriter out;
 
         try {
-            out = new PrintWriter( clients.get(0).getSocket().getOutputStream(), true );
-            out.println(clients.get(clients.size()-1).getName());
+            if(clients.get(0).getSocket() != null) {
+                out = new PrintWriter(clients.get(0).getSocket().getOutputStream(), true);
+                out.println(clients.get(clients.size() - 1).getName());
+            }else{
+                starterActivity.welcomeText.setText("Your Target is: " + clients.get(clients.size() - 1).getName());
+            }
             for(int i = 1; i < clients.size(); i++){
-
-                    out = new PrintWriter( clients.get(i).getSocket().getOutputStream(), true );
-                    out.println(clients.get(i-1).getName());
+                if(clients.get(i).getSocket() != null) {
+                    out = new PrintWriter(clients.get(i).getSocket().getOutputStream(), true);
+                    out.println(clients.get(i - 1).getName());
+                }else{
+                    starterActivity.welcomeText.setText("Your Target is: " + clients.get(i - 1).getName());
+                }
 
             }
         } catch (IOException e) {

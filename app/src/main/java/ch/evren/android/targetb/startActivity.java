@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import java.io.IOException;
 
 public class startActivity extends ActionBarActivity {
     TextView welcomeText;
+    EditText nameEdit;
 
     GameServer gameServer;
     @Override
@@ -22,6 +24,7 @@ public class startActivity extends ActionBarActivity {
         setContentView(R.layout.activity_start);
 
         welcomeText = (TextView) findViewById(R.id.startWelcome);
+        nameEdit = (EditText) findViewById(R.id.serverName);
     }
 
 
